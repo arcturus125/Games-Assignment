@@ -12,15 +12,8 @@ void AEnemyAIController::BeginPlay() {
 	// get all gameobjects of type TargetPoint and store them in the Waypoints Array
 	UGameplayStatics::GetAllActorsOfClass(GetWorld(), ATargetPoint::StaticClass(), Waypoints);
 
-	for (AActor* Waypoint : Waypoints)
-	{
-		if (Waypoint->ActorHasTag(TEXT("Lookout")))
-		{
-			lookoutPoint = Waypoint;
-
-			GetBlackboardComponent()->SetValueAsVector(TEXT("LookoutPosition"), lookoutPoint->GetActorLocation());
-		}
-	}
+	
+	
 
 	// ##pathfind the enemy to the player
 	//APawn* PlayerPawn = UGameplayStatics::GetPlayerPawn(GetWorld(), 0);
@@ -38,6 +31,16 @@ void AEnemyAIController::BeginPlay() {
 		RunBehaviorTree(EnemyBehaviorTree);
 	}
 	GetBlackboardComponent()->SetValueAsVector(TEXT("PlayerPosition"), PlayerPawn->GetActorLocation());
+
+	for (AActor* Waypoint : Waypoints)
+	{
+		if (Waypoint->ActorHasTag(TEXT("Lookout")))
+		{
+			lookoutPoint = Waypoint;
+
+			GetBlackboardComponent()->SetValueAsVector(TEXT("LookoutPosition"), lookoutPoint->GetActorLocation());
+		}
+	}
 
 }
 void AEnemyAIController::Tick(float DeltaTime) 
