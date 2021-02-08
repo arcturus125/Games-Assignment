@@ -28,6 +28,7 @@ public:
 	void MoveRight(float AxisValue);
 	void LookUp(float MouseY);
 	void Turn(float MouseX);
+	void Fire();
 private:
 	UPROPERTY(EditAnywhere)
 		float MoveSpeed = 100.0f;

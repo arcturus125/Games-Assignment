@@ -5,6 +5,8 @@
 #include <Assignment1\PlayerCharacter.h>
 #include <GameFramework/SpringArmComponent.h>
 
+#include "Bullet.h"
+
 // Sets default values for this component's properties
 UCustomMovementComponent::UCustomMovementComponent()
 {
@@ -68,6 +70,17 @@ void UCustomMovementComponent::Turn(float MouseY)
 {
 	APlayerCharacter* character = Cast<APlayerCharacter>(GetOwner());
 	character->AddControllerYawInput(MouseY);
+}
+void UCustomMovementComponent::Fire()
+{
+	APlayerCharacter* character = Cast<APlayerCharacter>(GetOwner());
+	if (character->bulletClass) 
+	{ //checks teabag projectile has been set in the editor
+		FVector SpawnLocation = character->projectileSpawnPoint->GetComponentLocation();
+		FRotator SpawnRotation = character->projectileSpawnPoint->GetComponentRotation();
+		ABullet* TempBag = GetWorld()->SpawnActor<ABullet>(character->bulletClass, SpawnLocation, SpawnRotation);
+	}
+	
 }
 
 

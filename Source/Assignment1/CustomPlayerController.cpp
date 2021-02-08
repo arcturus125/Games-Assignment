@@ -16,7 +16,7 @@ void ACustomPlayerController::SetupInputComponent() {
 	InputComponent->BindAxis("MoveRight", this, &ACustomPlayerController::CallRight);
 	InputComponent->BindAxis("LookUp", this, &ACustomPlayerController::CallLookUp);
 	InputComponent->BindAxis("Turn", this, &ACustomPlayerController::CallTurn);
-	//InputComponent->BindAction("Fire", EInputEvent::IE_Pressed, this, &ACustomPlayerController::CallFire);
+	InputComponent->BindAction("Fire", EInputEvent::IE_Pressed, this, &ACustomPlayerController::CallFire);
 
 }
 void ACustomPlayerController::CallForwards(float Value)
@@ -43,12 +43,10 @@ void ACustomPlayerController::CallTurn(float Value)
 	if (MyPawn) {
 		MyPawn->PawnMovement->Turn(Value);
 	}
-}/*
+}
 void ACustomPlayerController::CallFire()
 {
-	UE_LOG(LogTemp, Warning, TEXT("Fire!"));
-	if (MyPawn){
+	if (MyPawn) {
 		MyPawn->PawnMovement->Fire();
 	}
-
-}*/
+}

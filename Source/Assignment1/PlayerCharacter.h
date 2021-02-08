@@ -21,24 +21,31 @@ class ASSIGNMENT1_API APlayerCharacter : public ACharacter
 public:
 	// Sets default values for this character's properties
 	APlayerCharacter();
-	
+
+protected:
+	// Called when the game starts or when spawned
+	//virtual void BeginPlay() override;
+
+public:
+	// Called every frame
+	//virtual void Tick(float DeltaTime) override;
+	// Called to bind functionality to input
+	//virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+
+	// accessed in CustomMovementComponent.cpp
 	UPROPERTY(EditAnywhere)
 		UCustomMovementComponent* PawnMovement;
 	UPROPERTY(EditAnywhere)
-		USceneComponent* ProjectileSpawnPoint;
-
-	virtual void SetupPlayerInputComponent(UInputComponent* PlayerInputComponent) override;
-
-
-
-
+		USpringArmComponent* springArm;
+	UPROPERTY(EditAnywhere)
+		TSubclassOf<ABullet> bulletClass;
+	UPROPERTY(EditAnywhere)
+		USceneComponent* projectileSpawnPoint;
 private:
 	UPROPERTY(VisibleAnywhere)
 		UCameraComponent* Camera;
-	UPROPERTY(EditAnywhere)
-		TSubclassOf<ABullet> BulletClass;
-public:
-	UPROPERTY(EditAnywhere)
-		USpringArmComponent* springArm;
+
+
+	void Fire();
 
 };

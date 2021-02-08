@@ -6,6 +6,7 @@
 #include <GameFramework/SpringArmComponent.h>
 #include "GameFramework/Pawn.h"
 #include "CustomMovementComponent.h"
+#include "Bullet.h"
 
 
 // Sets default values
@@ -27,21 +28,9 @@ APlayerCharacter::APlayerCharacter()
 	PawnMovement = CreateDefaultSubobject<UCustomMovementComponent>(TEXT("Pawn Movement"));
 
 	// position of spawn point is assigned in blueprint
-	ProjectileSpawnPoint = CreateDefaultSubobject<USceneComponent>(TEXT("Projectile Spawn Point"));
-	ProjectileSpawnPoint->SetupAttachment(springArm);
-
+	projectileSpawnPoint = CreateDefaultSubobject<USceneComponent>(TEXT("Projectile Spawn Point"));
+	projectileSpawnPoint->SetupAttachment(springArm);
 }
-
-
-
-
-
-
-
-
-
-
-
 
 // following lab sheet, says to delete these
 
@@ -60,11 +49,21 @@ APlayerCharacter::APlayerCharacter()
 //
 //}
 //
-// Called to bind functionality to input
-void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
-{
-	Super::SetupPlayerInputComponent(PlayerInputComponent);
-
-
-}
+// //Called to bind functionality to input
+//void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
+//{
+//	Super::SetupPlayerInputComponent(PlayerInputComponent);
+//	PlayerInputComponent->BindAction("Fire", IE_Pressed, this, &APlayerCharacter::Fire);
+//
+//}
+//void APlayerCharacter::Fire()
+//{
+//	//UE_LOG(LogTemp, Warning, TEXT("FIRE"));
+//	//if (bulletClass) { //checks teabag projectile has been set in the editor
+//	//	FVector SpawnLocation = projectileSpawnPoint->GetComponentLocation();
+//	//	FRotator SpawnRotation = projectileSpawnPoint->GetComponentRotation();
+//	//	ABullet* TempBag = GetWorld()->SpawnActor<ABullet>(bulletClass, SpawnLocation, SpawnRotation);
+//	//}
+//
+//}
 

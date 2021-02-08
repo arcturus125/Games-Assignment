@@ -2,16 +2,13 @@
 
 #pragma once
 
-
 #include "GameFramework/ProjectileMovementComponent.h"
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "Bullet.generated.h"
 
-
-
-//class UProjectileMovementComponent;
+class UProjectileMovementComponent;
 UCLASS()
 class ASSIGNMENT1_API ABullet : public AActor
 {
@@ -20,10 +17,6 @@ class ASSIGNMENT1_API ABullet : public AActor
 public:	
 	// Sets default values for this actor's properties
 	ABullet();
-	UPROPERTY(EditAnywhere)
-		float movementSpeed = 1000.0f;
-	UPROPERTY(EditAnywhere)
-		UStaticMeshComponent* bulletMesh;
 private:
 	UPROPERTY(Editanywhere)
 		UProjectileMovementComponent* projectileMovement;
@@ -35,5 +28,10 @@ protected:
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+
+	UPROPERTY(EditAnywhere)
+		float movementSpeed = 1000.0f;
+	UPROPERTY(EditAnywhere)
+		UStaticMeshComponent* bulletMesh;
 
 };

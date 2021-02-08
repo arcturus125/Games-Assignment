@@ -24,6 +24,7 @@ public:
 	virtual void CallRight(float Value);
 	virtual void CallLookUp(float Value);
 	virtual void CallTurn(float Value);
+	virtual void CallFire();
 	APlayerCharacter* MyPawn;
 	
 };
