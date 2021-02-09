@@ -37,20 +37,12 @@ public:
 		float bulletDamage = 10.0f;
 	UPROPERTY(EditAnywhere)
 		UStaticMeshComponent* bulletMesh;
-//
-//
+
+
+
 	//collision management
 private:
 	UFUNCTION()
 		void OnCompHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp,
 			FVector NormalImpulse, const FHitResult& Hit);
-//
-//	UFUNCTION()
-//		void BeginOverlap(UPrimitiveComponent* OverlappedComponent,
-//			AActor* OtherActor,
-//			UPrimitiveComponent* OtherComp,
-//			int32 OtherBodyIndex,
-//			bool bFromSweep,
-//			const FHitResult& SweepResult);
-
 };
