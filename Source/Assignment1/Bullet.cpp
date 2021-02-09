@@ -34,12 +34,11 @@ ABullet::ABullet()
 
 	//// collision stuffs
 	//collider = CreateDefaultSubobject<UBoxComponent>(TEXT("Collider"));
-	//collider->SetNotifyRigidBodyCollision(true);
+	bulletMesh->SetNotifyRigidBodyCollision(true);
 	//collider->OnComponentBeginOverlap.AddDynamic(this, &ABullet::BeginOverlap);
-	///*collider->SetSimulatePhysics(true);
-	//collider->SetNotifyRigidBodyCollision(true);
+	bulletMesh->SetSimulatePhysics(true);
 	//collider->BodyInstance.SetCollisionProfileName("BlockAllDynamic");
-	//collider->OnComponentHit.AddDynamic(this, &ABullet::OnCompHit);*/
+	bulletMesh->OnComponentHit.AddDynamic(this, &ABullet::OnCompHit);
 
 }
 
@@ -60,32 +59,34 @@ void ABullet::Tick(float DeltaTime)
 }
 
 
-//void ABullet::OnCompHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp,FVector NormalImpulse, const FHitResult& Hit)
-//{
-//	UE_LOG(LogTemp, Warning, TEXT("Bullet Hit Something"));
-//
-//
-//	if (OtherActor != nullptr)
-//	{
-//		if (OtherActor->GetClass()->IsChildOf(AEnemyCharacter::StaticClass()))
-//		{
-//			UE_LOG(LogTemp, Warning, TEXT("Bullet HIT!!"));
-//
-//			AActor* ProjectileOwner = GetOwner();
-//			// damage the enemy
-//			UGameplayStatics::ApplyDamage(
-//				OtherActor, //actor that will be damaged
-//				bulletDamage, //the base damage to apply
-//				ProjectileOwner->GetInstigatorController(), //controller that caused the damage
-//				this, //Actor that actually caused the damage
-//				UDamageType::StaticClass() //class that describes the damage that was done
-//			);
-//
-//			// once bullet has hit, delete the actor from the scene so there isnt a floating bullet
-//			OtherComp->DestroyComponent();
-//		}
-//	}
-//}
+void ABullet::OnCompHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp,FVector NormalImpulse, const FHitResult& Hit)
+{
+	//UE_LOG(LogTemp, Warning, TEXT("Bullet Hit An Object"));
+
+
+	if (OtherActor != nullptr)
+	{
+		//UE_LOG(LogTemp, Warning, TEXT("Object not null"));
+		//if (OtherActor->GetClass()->IsChildOf(AEnemyCharacter::StaticClass()))
+		if(OtherActor->ActorHasTag(TEXT("Enemy")))
+		{
+			UE_LOG(LogTemp, Warning, TEXT("Bullet HIT!!"));
+
+			AActor* ProjectileOwner = GetOwner();
+			// damage the enemy
+			UGameplayStatics::ApplyDamage(
+				OtherActor, //actor that will be damaged
+				bulletDamage, //the base damage to apply
+				ProjectileOwner->GetInstigatorController(), //controller that caused the damage
+				this, //Actor that actually caused the damage
+				UDamageType::StaticClass() //class that describes the damage that was done
+			);
+
+			// once bullet has hit, delete the actor from the scene so there isnt a floating bullet
+			this->Destroy();
+		}
+	}
+}
 //
 //
 //

@@ -25,7 +25,7 @@ AEnemyCharacter::AEnemyCharacter()
 	PrimaryActorTick.bCanEverTick = true;
 
 
-	GetCapsuleComponent()->OnComponentHit.AddDynamic(this, &AEnemyCharacter::OnCompHit);
+	/*GetCapsuleComponent()->OnComponentHit.AddDynamic(this, &AEnemyCharacter::OnCompHit);*/
 }
 
 
@@ -45,7 +45,7 @@ void AEnemyCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComp
 
 float AEnemyCharacter::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser)
 {
-	Health += DamageAmount;
+	Health -= DamageAmount;
 	if (Health <= 0)
 	{
 		this->Destroy();
@@ -58,7 +58,7 @@ float AEnemyCharacter::TakeDamage(float DamageAmount, FDamageEvent const& Damage
 void AEnemyCharacter::BeginPlay()
 {
 	Super::BeginPlay();
-}
+}/*
 void AEnemyCharacter::OnCompHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit)
 {
 	UE_LOG(LogTemp, Warning, TEXT("hit something"));
@@ -67,5 +67,5 @@ void AEnemyCharacter::OnCompHit(UPrimitiveComponent* HitComp, AActor* OtherActor
 		UE_LOG(LogTemp, Warning, TEXT("Bullet HIT!!"));
 		OtherActor->Destroy();
 	}
-}
+}*/
 

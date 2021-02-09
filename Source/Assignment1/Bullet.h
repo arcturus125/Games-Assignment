@@ -19,9 +19,9 @@ public:
 	ABullet();
 private:
 	UPROPERTY(Editanywhere)
-		UProjectileMovementComponent* projectileMovement;/*
-	UPROPERTY(Editanywhere)
-		UBoxComponent* collider;*/
+		UProjectileMovementComponent* projectileMovement;
+	//UPROPERTY(Editanywhere)
+	//	UBoxComponent* collider;
 
 protected:
 	// Called when the game starts or when spawned
@@ -39,11 +39,11 @@ public:
 		UStaticMeshComponent* bulletMesh;
 //
 //
-//	//collision management
-//private:
-//	UFUNCTION()
-//		void OnCompHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp,
-//			FVector NormalImpulse, const FHitResult& Hit);
+	//collision management
+private:
+	UFUNCTION()
+		void OnCompHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp,
+			FVector NormalImpulse, const FHitResult& Hit);
 //
 //	UFUNCTION()
 //		void BeginOverlap(UPrimitiveComponent* OverlappedComponent,
