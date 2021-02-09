@@ -78,7 +78,8 @@ void UCustomMovementComponent::Fire()
 	{ //checks teabag projectile has been set in the editor
 		FVector SpawnLocation = character->projectileSpawnPoint->GetComponentLocation();
 		FRotator SpawnRotation = character->projectileSpawnPoint->GetComponentRotation();
-		ABullet* TempBag = GetWorld()->SpawnActor<ABullet>(character->bulletClass, SpawnLocation, SpawnRotation);
+		ABullet* TempBullet= GetWorld()->SpawnActor<ABullet>(character->bulletClass, SpawnLocation, SpawnRotation);
+		TempBullet->SetOwner(character);
 	}
 	
 }
