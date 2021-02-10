@@ -80,6 +80,7 @@ void UCustomMovementComponent::Fire()
 		FRotator SpawnRotation = character->projectileSpawnPoint->GetComponentRotation();
 		ABullet* TempBullet= GetWorld()->SpawnActor<ABullet>(character->bulletClass, SpawnLocation, SpawnRotation);
 		TempBullet->SetOwner(character);
+		TempBullet->PlayShootSound();
 	}
 	
 }

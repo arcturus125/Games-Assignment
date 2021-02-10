@@ -25,7 +25,10 @@ void AEndGamePoint::BeginOverlap(UPrimitiveComponent* OverlappedComponent,
 	const FHitResult& SweepResult)
 {
 	UE_LOG(LogTemp, Warning, TEXT("Collision"));
-	gamemode->TriggerLevelChange(nextLevelName);
+	if (OtherActor->ActorHasTag(TEXT("Player")))
+	{
+		gamemode->TriggerLevelChange(nextLevelName);
+	}
 }
 // Called when the game starts or when spawned
 void AEndGamePoint::BeginPlay()

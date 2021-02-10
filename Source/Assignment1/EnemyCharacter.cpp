@@ -4,6 +4,7 @@
 #include "EnemyCharacter.h"
 #include "Components/CapsuleComponent.h"
 #include <Assignment1\Bullet.h>
+#include <Assignment1\CustomGameModeBase.h>
 
 
 // Sets default values
@@ -33,6 +34,8 @@ float AEnemyCharacter::TakeDamage(float DamageAmount, FDamageEvent const& Damage
 	Health -= DamageAmount;
 	if (Health <= 0)
 	{
+		auto gamemode = Cast<ACustomGameModeBase>(GetWorld()->GetAuthGameMode());
+		gamemode->numOfEnemiesKilled++;
 		this->Destroy();
 	}
 	return 0.0f;

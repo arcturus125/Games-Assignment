@@ -16,7 +16,8 @@ class ASSIGNMENT1_API ACustomGameModeBase : public AGameModeBase
 
 public:
 	void TriggerLevelChange(FName levelName);
-	bool allEnemiesKilled = true;
+	int numOfEnemiesKilled = 0;
+	int requiredNumOfKills = 2;
 
 	
 };

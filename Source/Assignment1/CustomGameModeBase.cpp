@@ -6,9 +6,13 @@
 
 void ACustomGameModeBase::TriggerLevelChange(FName levelName)
 {
-	if (allEnemiesKilled)
+	if (numOfEnemiesKilled >= requiredNumOfKills)
 	{
 		UGameplayStatics::OpenLevel(GetWorld(), levelName);
+	}
+	else
+	{
+		UE_LOG(LogTemp, Warning, TEXT("tried to leave level, but not enough enemies killed!!"));
 	}
 }
 

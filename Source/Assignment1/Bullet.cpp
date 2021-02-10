@@ -51,7 +51,18 @@ void ABullet::Tick(float DeltaTime)
 
 }
 
-
+void ABullet::PlayShootSound()
+{
+	// play sound when enemy is hit
+	UGameplayStatics::PlaySoundAtLocation(
+		GetWorld(),
+		shootSound,
+		GetActorLocation(),
+		1.0f,
+		1.0f,
+		0.0f
+	);
+}
 void ABullet::OnCompHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp,FVector NormalImpulse, const FHitResult& Hit)
 {
 	if (OtherActor != nullptr) // error catching
@@ -71,8 +82,31 @@ void ABullet::OnCompHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimi
 				UDamageType::StaticClass() //class that describes the damage that was done
 			);
 
+			// play sound when enemy is hit
+			UGameplayStatics::PlaySoundAtLocation(
+				GetWorld(),
+				deathSound,
+				GetActorLocation(),
+				1.0f,
+				1.0f,
+				0.0f
+			);
+
 			// once bullet has hit, delete the actor from the scene so there isnt a floating bullet
 			this->Destroy();
+		}
+		else if (OtherActor->ActorHasTag(TEXT("Distructable")))
+		{
+			UE_LOG(LogTemp, Warning, TEXT("Bullet HIT distructable!!"));
+			AActor* ProjectileOwner = GetOwner();
+			// damage the enemy
+			UGameplayStatics::ApplyDamage(
+				OtherActor, //actor that will be damaged
+				bulletDamage, //the base damage to apply
+				ProjectileOwner->GetInstigatorController(), //controller that caused the damage
+				this, //Actor that actually caused the damage
+				UDamageType::StaticClass() //class that describes the damage that was done
+			);
 		}
 	}
 }

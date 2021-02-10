@@ -22,6 +22,10 @@ private:
 		UProjectileMovementComponent* projectileMovement;
 	//UPROPERTY(Editanywhere)
 	//	UBoxComponent* collider;
+	UPROPERTY(EditAnywhere)
+		USoundBase* deathSound;
+	UPROPERTY(EditAnywhere)
+		USoundBase* shootSound;
 
 protected:
 	// Called when the game starts or when spawned
@@ -37,6 +41,7 @@ public:
 		float bulletDamage = 10.0f;
 	UPROPERTY(EditAnywhere)
 		UStaticMeshComponent* bulletMesh;
+	void PlayShootSound();
 
 
 
