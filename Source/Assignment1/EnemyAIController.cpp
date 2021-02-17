@@ -76,22 +76,22 @@ void AEnemyAIController::OnMoveCompleted(FAIRequestID RequestID, const
 void AEnemyAIController::LOScheck()
 {
 	// moved to BTService _ LOS
-	FHitResult Hit;
-	FVector thisEnemyLocation = GetPawn()->GetActorLocation();
-	FVector playerCurrentLocation = PlayerPawn->GetActorLocation();
+	//FHitResult Hit;
+	//FVector thisEnemyLocation = GetPawn()->GetActorLocation();
+	//FVector playerCurrentLocation = PlayerPawn->GetActorLocation();
 
-	bool bDidHit = GetWorld()->LineTraceSingleByChannel(Hit, thisEnemyLocation, playerCurrentLocation, ECC_Visibility);
-	if (bDidHit)
-	{
-		// there is an object obstructing the enemy's LOS of the player
-		GetBlackboardComponent()->ClearValue(TEXT("PlayerPosition"));
-	}
-	else
-	{
-		// there is nothing obstructing the enemy's LOS of the player
+	//bool bDidHit = GetWorld()->LineTraceSingleByChannel(Hit, thisEnemyLocation, playerCurrentLocation, ECC_Visibility);
+	//if (bDidHit)
+	//{
+	//	// there is an object obstructing the enemy's LOS of the player
+	//	GetBlackboardComponent()->ClearValue(TEXT("PlayerPosition"));
+	//}
+	//else
+	//{
+	//	// there is nothing obstructing the enemy's LOS of the player
 
-		GetBlackboardComponent()->SetValueAsVector(TEXT("PlayerPosition"), PlayerPawn->GetActorLocation());
-		GetBlackboardComponent()->SetValueAsVector(TEXT("LastKnownPlayerPosition"), PlayerPawn->GetActorLocation());
+	//	GetBlackboardComponent()->SetValueAsVector(TEXT("PlayerPosition"), PlayerPawn->GetActorLocation());
+	//	GetBlackboardComponent()->SetValueAsVector(TEXT("LastKnownPlayerPosition"), PlayerPawn->GetActorLocation());
 
-	}
+	//}
 }
