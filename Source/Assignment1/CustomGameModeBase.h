@@ -18,6 +18,9 @@ public:
 	void TriggerLevelChange(FName levelName);
 	int numOfEnemiesKilled = 0;
 	int requiredNumOfKills = 2;
+	virtual void BeginPlay() override;
+	void Start();
+	void TimerUp();
 
 	
 };

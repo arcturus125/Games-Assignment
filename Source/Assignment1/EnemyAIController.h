@@ -28,4 +28,5 @@ private:
 	APawn* PlayerPawn;
 public:
 	void OnMoveCompleted(FAIRequestID RequestID, const FPathFollowingResult& Result) override;
+	void LOScheck();
 };

@@ -30,7 +30,7 @@ void AEnemyAIController::BeginPlay() {
 	{
 		RunBehaviorTree(EnemyBehaviorTree);
 	}
-	GetBlackboardComponent()->SetValueAsVector(TEXT("PlayerPosition"), PlayerPawn->GetActorLocation());
+	//GetBlackboardComponent()->SetValueAsVector(TEXT("PlayerPosition"), PlayerPawn->GetActorLocation());
 
 	for (AActor* Waypoint : Waypoints)
 	{
@@ -40,13 +40,19 @@ void AEnemyAIController::BeginPlay() {
 
 			GetBlackboardComponent()->SetValueAsVector(TEXT("LookoutPosition"), lookoutPoint->GetActorLocation());
 		}
+		if (Waypoint->ActorHasTag(TEXT("Home")))
+		{
+			lookoutPoint = Waypoint;
+
+			GetBlackboardComponent()->SetValueAsVector(TEXT("HomePosition"), lookoutPoint->GetActorLocation());
+		}
 	}
 
 }
 void AEnemyAIController::Tick(float DeltaTime) 
 {
 	Super::Tick(DeltaTime);
-	GetBlackboardComponent()->SetValueAsVector(TEXT("PlayerPosition"), PlayerPawn->GetActorLocation());
+	LOScheck();
 }
 
 AActor* AEnemyAIController::ChooseWaypoint()
@@ -66,4 +72,26 @@ void AEnemyAIController::OnMoveCompleted(FAIRequestID RequestID, const
 {
 	Super::OnMoveCompleted(RequestID, Result);
 	//RandomPatrol();
+}
+void AEnemyAIController::LOScheck()
+{
+	// moved to BTService _ LOS
+	FHitResult Hit;
+	FVector thisEnemyLocation = GetPawn()->GetActorLocation();
+	FVector playerCurrentLocation = PlayerPawn->GetActorLocation();
+
+	bool bDidHit = GetWorld()->LineTraceSingleByChannel(Hit, thisEnemyLocation, playerCurrentLocation, ECC_Visibility);
+	if (bDidHit)
+	{
+		// there is an object obstructing the enemy's LOS of the player
+		GetBlackboardComponent()->ClearValue(TEXT("PlayerPosition"));
+	}
+	else
+	{
+		// there is nothing obstructing the enemy's LOS of the player
+
+		GetBlackboardComponent()->SetValueAsVector(TEXT("PlayerPosition"), PlayerPawn->GetActorLocation());
+		GetBlackboardComponent()->SetValueAsVector(TEXT("LastKnownPlayerPosition"), PlayerPawn->GetActorLocation());
+
+	}
 }

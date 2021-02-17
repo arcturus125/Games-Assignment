@@ -4,10 +4,14 @@
 #include "CustomPlayerController.h"
 #include "PlayerCharacter.h"
 #include "CustomMovementComponent.h"
+#include "Blueprint/UserWidget.h"
 
 void ACustomPlayerController::BeginPlay() {
 	Super::BeginPlay();
 	MyPawn = Cast<APlayerCharacter>(GetPawn());
+	UIInstance = CreateWidget(this, HUDClass);
+	if(UIInstance != nullptr)
+		UIInstance->AddToViewport();
 }
 void ACustomPlayerController::SetupInputComponent() {
 	Super::SetupInputComponent();
@@ -46,7 +50,20 @@ void ACustomPlayerController::CallTurn(float Value)
 }
 void ACustomPlayerController::CallFire()
 {
-	if (MyPawn) {
-		MyPawn->PawnMovement->Fire();
+	if (ammoCount > 0)
+	{
+		if (MyPawn) {
+			MyPawn->PawnMovement->Fire();
+			ammoCount--;
+		}
 	}
+}
+
+float ACustomPlayerController::GetHealthPercentage()
+{
+	return healthPercentage;
+}
+float ACustomPlayerController::GetAmmoPercent()
+{
+	return (float)ammoCount /(float)maxAmmoCount;
 }

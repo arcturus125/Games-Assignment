@@ -5,6 +5,8 @@
 #include "Components/CapsuleComponent.h"
 #include <Assignment1\Bullet.h>
 #include <Assignment1\CustomGameModeBase.h>
+#include <Runtime\Engine\Classes\Kismet\KismetMathLibrary.h>
+#include <Runtime\Engine\Classes\Kismet\GameplayStatics.h>
 
 
 // Sets default values
@@ -12,6 +14,8 @@ AEnemyCharacter::AEnemyCharacter()
 {
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
+	projectileSpawnPoint = CreateDefaultSubobject<USceneComponent>(TEXT("Projectile Spawn Point"));
+	projectileSpawnPoint->SetupAttachment(RootComponent);
 }
 
 
@@ -46,4 +50,17 @@ float AEnemyCharacter::TakeDamage(float DamageAmount, FDamageEvent const& Damage
 void AEnemyCharacter::BeginPlay()
 {
 	Super::BeginPlay();
+
+}
+
+void AEnemyCharacter::ShootPlayer()
+{
+	APawn* PlayerPawn = UGameplayStatics::GetPlayerPawn(GetWorld(), 0);
+	FVector SpawnLocation = projectileSpawnPoint->GetComponentLocation();
+	//FRotator SpawnRotation = projectileSpawnPoint->GetComponentRotation();
+	FRotator SpawnRotation = UKismetMathLibrary::FindLookAtRotation(this->GetActorLocation(), PlayerPawn->GetActorLocation());
+	ABullet* TempBullet = GetWorld()->SpawnActor<ABullet>(bulletClass, SpawnLocation, SpawnRotation);
+	TempBullet->SetOwner(this);
+	//TempBullet->PlayShootSound();
+	
 }

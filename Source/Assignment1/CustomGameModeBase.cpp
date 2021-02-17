@@ -4,6 +4,18 @@
 #include "CustomGameModeBase.h"
 #include <Kismet/GameplayStatics.h>
 
+
+FTimerHandle EndGameTimer;
+
+void ACustomGameModeBase::BeginPlay()
+{
+	Super::BeginPlay();
+	Start();
+}
+void ACustomGameModeBase::Start()
+{
+	GetWorld()->GetTimerManager().SetTimer(EndGameTimer, this, &ACustomGameModeBase::TimerUp, 100, false);
+}
 void ACustomGameModeBase::TriggerLevelChange(FName levelName)
 {
 	if (numOfEnemiesKilled >= requiredNumOfKills)
@@ -16,4 +28,10 @@ void ACustomGameModeBase::TriggerLevelChange(FName levelName)
 	}
 }
 
-//UGameplayStatics::OpenLevel(GetWorld(), "WinLevel");
+void ACustomGameModeBase::TimerUp()
+{
+	if (numOfEnemiesKilled < requiredNumOfKills)
+	{
+		UGameplayStatics::OpenLevel(GetWorld(), "GameOver");
+	}
+}

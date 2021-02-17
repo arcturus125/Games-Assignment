@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "EnemyCharacter.generated.h"
+class ABullet;
 
 UCLASS()
 class ASSIGNMENT1_API AEnemyCharacter : public ACharacter
@@ -28,6 +29,13 @@ public:
 
 	UPROPERTY()
 		float Health = 10.0f;
+	UFUNCTION(BlueprintCallable)
+		void ShootPlayer();
+
+	UPROPERTY(EditAnywhere)
+		USceneComponent* projectileSpawnPoint;
+	UPROPERTY(EditAnywhere)
+		TSubclassOf<ABullet> bulletClass;
 private:
 
 	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent,
