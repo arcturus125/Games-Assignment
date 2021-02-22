@@ -37,6 +37,6 @@ private:
 	UPROPERTY(EditAnywhere)
 		FName nextLevelName;
 	UBoxComponent* collider;
-	ACustomGameModeBase* gamemode;
+	ACustomGameModeBase* gamemode; // reference to the gamemode class used for changing scenes
 
 };

@@ -15,18 +15,11 @@ class ASSIGNMENT1_API AEnemyAIController : public AAIController
 	GENERATED_BODY()
 protected:
 	virtual void BeginPlay() override;
-	virtual void Tick(float DeltaTime) override;
 private:
-	UPROPERTY()
-	TArray<AActor*> Waypoints;
-	UPROPERTY()
-		AActor* lookoutPoint;
 	UPROPERTY(EditAnywhere)
 		UBehaviorTree* EnemyBehaviorTree;
-	AActor* ChooseWaypoint();
-	void RandomPatrol();
-	APawn* PlayerPawn;
-public:
-	void OnMoveCompleted(FAIRequestID RequestID, const FPathFollowingResult& Result) override;
-	void LOScheck();
+
+	/* the points that the enemy patrols between are no longer assigned via code, and are instead
+	* assigned per enemy; this means two different enemies can have different patrol points
+	*/
 };

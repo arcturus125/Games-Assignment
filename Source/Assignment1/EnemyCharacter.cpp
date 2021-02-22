@@ -7,6 +7,8 @@
 #include <Assignment1\CustomGameModeBase.h>
 #include <Runtime\Engine\Classes\Kismet\KismetMathLibrary.h>
 #include <Runtime\Engine\Classes\Kismet\GameplayStatics.h>
+#include "EnemyAIController.h"
+#include "BehaviorTree/BlackboardComponent.h"
 
 
 // Sets default values
@@ -35,7 +37,9 @@ void AEnemyCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComp
 
 float AEnemyCharacter::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser)
 {
+	// reduce the enemies health
 	Health -= DamageAmount;
+	// if the enemy's health is negative, increase the score and delete the enemy
 	if (Health <= 0)
 	{
 		auto gamemode = Cast<ACustomGameModeBase>(GetWorld()->GetAuthGameMode());
@@ -50,17 +54,20 @@ float AEnemyCharacter::TakeDamage(float DamageAmount, FDamageEvent const& Damage
 void AEnemyCharacter::BeginPlay()
 {
 	Super::BeginPlay();
+	AEnemyAIController* enemyController = Cast<AEnemyAIController>(GetController());
+	enemyController->GetBlackboardComponent()->SetValueAsVector(TEXT("LookoutPosition"), lookoutPoint->GetActorLocation());
+	enemyController->GetBlackboardComponent()->SetValueAsVector(TEXT("HomePosition"), homePoint->GetActorLocation());
 
 }
+
 
 void AEnemyCharacter::ShootPlayer()
 {
 	APawn* PlayerPawn = UGameplayStatics::GetPlayerPawn(GetWorld(), 0);
 	FVector SpawnLocation = projectileSpawnPoint->GetComponentLocation();
-	//FRotator SpawnRotation = projectileSpawnPoint->GetComponentRotation();
 	FRotator SpawnRotation = UKismetMathLibrary::FindLookAtRotation(this->GetActorLocation(), PlayerPawn->GetActorLocation());
 	ABullet* TempBullet = GetWorld()->SpawnActor<ABullet>(bulletClass, SpawnLocation, SpawnRotation);
 	TempBullet->SetOwner(this);
-	//TempBullet->PlayShootSound();
+	TempBullet->PlayShootSound();
 	
 }

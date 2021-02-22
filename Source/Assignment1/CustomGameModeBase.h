@@ -16,11 +16,14 @@ class ASSIGNMENT1_API ACustomGameModeBase : public AGameModeBase
 
 public:
 	void TriggerLevelChange(FName levelName);
-	int numOfEnemiesKilled = 0;
-	int requiredNumOfKills = 2;
+	UPROPERTY(EditAnywhere)  // different levels will have a different required number of kills, will be changed in the world outliner
+		int requiredNumOfKills = 2;
+	int numOfEnemiesKilled = 0; //needs to be public, accessedin enemycharacter when an enemy dies
+private:
 	virtual void BeginPlay() override;
 	void Start();
 	void TimerUp();
+
 
 	
 };

@@ -27,11 +27,6 @@ protected:
 	//virtual void BeginPlay() override;
 
 public:
-	// Called every frame
-	//virtual void Tick(float DeltaTime) override;
-	// Called to bind functionality to input
-	//virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
-
 	// accessed in CustomMovementComponent.cpp
 	UPROPERTY(EditAnywhere)
 		UCustomMovementComponent* PawnMovement;
@@ -41,11 +36,18 @@ public:
 		TSubclassOf<ABullet> bulletClass;
 	UPROPERTY(EditAnywhere)
 		USceneComponent* projectileSpawnPoint;
+
+
+	float Health = 100;
+	float maxHealth = 100;
 private:
 	UPROPERTY(VisibleAnywhere)
 		UCameraComponent* Camera;
 
-
 	void Fire();
+
+	// allows the player to take damage
+	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent,
+		AController* EventInstigator, AActor* DamageCauser) override;
 
 };

@@ -10,10 +10,12 @@ AEndGamePoint::AEndGamePoint()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
-
+	
+	// create the hitbox used as a trigger
 	collider = CreateDefaultSubobject<UBoxComponent>(TEXT("Collision zone"));
 	SetRootComponent(collider);
 
+	// runs the beginOverlap function when the trigger detects a collision
 	collider->OnComponentBeginOverlap.AddDynamic(this, &AEndGamePoint::BeginOverlap);
 
 }
@@ -25,6 +27,7 @@ void AEndGamePoint::BeginOverlap(UPrimitiveComponent* OverlappedComponent,
 	const FHitResult& SweepResult)
 {
 	UE_LOG(LogTemp, Warning, TEXT("Collision"));
+	// check the player is the actor causing the trigger event
 	if (OtherActor->ActorHasTag(TEXT("Player")))
 	{
 		gamemode->TriggerLevelChange(nextLevelName);

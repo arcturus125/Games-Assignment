@@ -10,53 +10,28 @@
 // Sets default values for this component's properties
 UCustomMovementComponent::UCustomMovementComponent()
 {
-	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
-	// off to improve performance if you don't need them.
 	PrimaryComponentTick.bCanEverTick = true;
-
-	// ...
 }
-
-
-// Called when the game starts
 void UCustomMovementComponent::BeginPlay()
 {
 	Super::BeginPlay();
-
-	// ...
-	
 }
-
-
-// Called every frame
 void UCustomMovementComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-
-	// ...
 }
 
+
+// ****************************************
+//          movement: get a reference to the character and move/rotate it based on inputs
+// ****************************************
 void UCustomMovementComponent::MoveForward(float AxisX)
 {
-	/*FVector DeltaLocation = FVector(AxisX * MoveSpeed * GetWorld()->DeltaTimeSeconds,
-		0.0f, 0.0f);
-	GetOwner()->AddActorLocalOffset(DeltaLocation, true);*/
-
 	APlayerCharacter* character = Cast<APlayerCharacter>(GetOwner());
 	character->AddMovementInput(character->GetActorForwardVector()*AxisX);
-
-
 }
-
 void UCustomMovementComponent::MoveRight(float AxisZ)
 {
-	// using AddMovementInput plays the animations on the character, so i switched to using that instead
-	/*float RotateAmount = AxisZ * RotationSpeed * GetWorld()->DeltaTimeSeconds;
-	FRotator Rotation = FRotator(0.0f, RotateAmount, 0.0f);
-	FQuat DeltaRotation = FQuat(Rotation);
-	GetOwner()->AddActorLocalRotation(DeltaRotation, true);*/
-
-
 	APlayerCharacter* character = Cast<APlayerCharacter>(GetOwner());
 	character->AddMovementInput(character->GetActorRightVector() * AxisZ);
 }
@@ -71,11 +46,17 @@ void UCustomMovementComponent::Turn(float MouseY)
 	APlayerCharacter* character = Cast<APlayerCharacter>(GetOwner());
 	character->AddControllerYawInput(MouseY);
 }
+
+
+// when the player presses the shoot button, get the position and rotation from the local space of the bluprint
+// spawn the bullet, and set the owner of the bullet
+// then play the shooting sound
 void UCustomMovementComponent::Fire()
 {
 	APlayerCharacter* character = Cast<APlayerCharacter>(GetOwner());
+	//checks teabag projectile has been set in the editor
 	if (character->bulletClass) 
-	{ //checks teabag projectile has been set in the editor
+	{ 
 		FVector SpawnLocation = character->projectileSpawnPoint->GetComponentLocation();
 		FRotator SpawnRotation = character->projectileSpawnPoint->GetComponentRotation();
 		ABullet* TempBullet= GetWorld()->SpawnActor<ABullet>(character->bulletClass, SpawnLocation, SpawnRotation);

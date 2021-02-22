@@ -33,10 +33,14 @@ public:
 		TSubclassOf<UUserWidget> HUDClass; 
 	UPROPERTY()
 		UUserWidget* UIInstance;
+
+	// health of player
 	UPROPERTY()
 		float healthPercentage = 1.0f;
 	UFUNCTION(BlueprintPure)
 		float GetHealthPercentage();
+
+	// player's ammo
 	UPROPERTY()
 		int ammoCount = 15;
 	UPROPERTY()
