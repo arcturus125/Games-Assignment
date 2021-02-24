@@ -32,6 +32,7 @@ ABullet::ABullet()
 	//// collision stuffs
 	bulletMesh->SetNotifyRigidBodyCollision(true); // tell the mesh to listen for collisions
 	bulletMesh->OnComponentHit.AddDynamic(this, &ABullet::OnCompHit); // run OnCompHit() when the bullet hits something
+	
 
 }
 
@@ -150,7 +151,7 @@ void ABullet::OnCompHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimi
 			AActor* ProjectileOwner = GetOwner();
 
 			UPrimitiveComponent* rootComp = Cast<UPrimitiveComponent>(OtherActor->GetRootComponent());
-			float ImpulseForce = 1000;// 000000000.0f;
+			float ImpulseForce = 500;
 			rootComp->AddImpulse(GetActorForwardVector() * ImpulseForce);
 		}
 	}

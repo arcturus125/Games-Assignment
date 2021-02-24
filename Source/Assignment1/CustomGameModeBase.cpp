@@ -18,11 +18,12 @@ void ACustomGameModeBase::Start()
 	GetWorld()->GetTimerManager().SetTimer(EndGameTimer, this, &ACustomGameModeBase::TimerUp, 100, false);
 }
 // run when the player collides with the EndGamePoint trigger
-void ACustomGameModeBase::TriggerLevelChange(FName levelName)
+void ACustomGameModeBase::TriggerLevelChange(FName levelName, int killsNeededOnNextLevel)
 {
 	// if the player has killes all the enemies in the scene, take them to the next level
 	if (numOfEnemiesKilled >= requiredNumOfKills)
 	{
+		requiredNumOfKills = killsNeededOnNextLevel;
 		UGameplayStatics::OpenLevel(GetWorld(), levelName);
 	}
 	else

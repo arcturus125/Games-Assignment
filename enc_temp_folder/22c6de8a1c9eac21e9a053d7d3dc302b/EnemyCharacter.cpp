@@ -56,17 +56,7 @@ void AEnemyCharacter::BeginPlay()
 	Super::BeginPlay();
 	AEnemyAIController* enemyController = Cast<AEnemyAIController>(GetController());
 
-
-
-	enemyController->StartTree();	/* Sometimes, very rarely, the code in this class, runs before the code in EnemyAIController.cpp
-									 * this means that an enemy will try to update the keys on the blackboard before the behaviour tree has been started.
-									 * all this does is tell the other class to start the behaviour tree before the following code is run
-									 * if you dont do this, when i package the game, the enemies' Behaviour trees are broken because there
-									 * are missing values in the blackboard
-									 */
-
-
-
+	enemyController->StartTree();
 	auto bb = enemyController->GetBlackboardComponent();
 	if (bb != nullptr) {
 		if (lookoutPoint != nullptr)

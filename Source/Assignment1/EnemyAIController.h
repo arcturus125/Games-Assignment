@@ -13,8 +13,9 @@ UCLASS()
 class ASSIGNMENT1_API AEnemyAIController : public AAIController
 {
 	GENERATED_BODY()
-protected:
+public:
 	virtual void BeginPlay() override;
+	void StartTree();
 private:
 	UPROPERTY(EditAnywhere)
 		UBehaviorTree* EnemyBehaviorTree;

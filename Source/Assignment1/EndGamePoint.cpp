@@ -30,7 +30,7 @@ void AEndGamePoint::BeginOverlap(UPrimitiveComponent* OverlappedComponent,
 	// check the player is the actor causing the trigger event
 	if (OtherActor->ActorHasTag(TEXT("Player")))
 	{
-		gamemode->TriggerLevelChange(nextLevelName);
+		gamemode->TriggerLevelChange(nextLevelName, killsNeededOnNextLevel);
 	}
 }
 // Called when the game starts or when spawned

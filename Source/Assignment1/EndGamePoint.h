@@ -36,6 +36,8 @@ public:
 private:
 	UPROPERTY(EditAnywhere)
 		FName nextLevelName;
+	UPROPERTY(EditAnywhere)
+		int killsNeededOnNextLevel;
 	UBoxComponent* collider;
 	ACustomGameModeBase* gamemode; // reference to the gamemode class used for changing scenes
 
